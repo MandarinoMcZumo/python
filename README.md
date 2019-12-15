@@ -32,8 +32,8 @@ El dataset propuesto lo podemos encontrar en [este enlace][enlace_datos]. Ademá
 
 [random_forest]: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html
 [linear_regression]: https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html?highlight=linear%20regression#sklearn.linear_model.LinearRegression
-[SVR]: [https://scikit-learn.org/stable/auto_examples/svm/plot_svm_regression.html?highlight=polynomic%20regression]
-[Neural]: [https://keras.io/getting-started/sequential-model-guide/]
+[SVR]: https://scikit-learn.org/stable/auto_examples/svm/plot_svm_regression.html?highlight=polynomic%20regression
+[Neural]: https://keras.io/getting-started/sequential-model-guide/
 
 Emplearemos los siguientes algoritmos para realizar un modelo:
 + [Random Forest][random_forest]
