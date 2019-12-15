@@ -10,7 +10,16 @@ El proyecto consiste en el tratamiento de datos, exploración gráfica y la elab
 
 ***
 
-### Dataset
+### _Secciones_
+
++ [Dataset](#dataset)
++ [Algoritmos](#algoritmos)
++ [Visualización](#visualización)
++ [Presentación y estructura](#presentación-y-estructura)
+
+***
+
+## Dataset
 
 [enlace_datos]: https://www.kaggle.com/c/house-prices-advanced-regression-techniques/data
 [enlace_concurso]: https://www.kaggle.com/c/house-prices-advanced-regression-techniques/overview
@@ -19,20 +28,24 @@ El dataset propuesto lo podemos encontrar en [este enlace][enlace_datos]. Ademá
 
 ***
 
-### Algoritmos
+## Algoritmos
+
+[random_forest]: https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html
+[linear_regression]: https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html?highlight=linear%20regression#sklearn.linear_model.LinearRegression
+[SVR]: [https://scikit-learn.org/stable/auto_examples/svm/plot_svm_regression.html?highlight=polynomic%20regression]
+[Neural]: [https://keras.io/getting-started/sequential-model-guide/]
 
 Emplearemos los siguientes algoritmos para realizar un modelo:
-+ Random Forest
-+ Linear Regression
-+ Polynomic Regression
-+ Neural Network
-+ SVR
++ [Random Forest][random_forest]
++ [Linear Regression][linear_regression]
++ [Neural Network][Neural]
++ [SVR][SVR]
 
 Además de probar distintos métodos tras realizar PCA en el dataset y evaluar si compensa realizar la reducción de variables ara obtener un mejor resultado.
 
 ***
 
-### Visualización
+## Visualización
 
 [enlace_seaborn]: https://seaborn.pydata.org/
 [enlace_altair]: https://altair-viz.github.io/index.html
@@ -41,9 +54,9 @@ Las librerías para visualización de gráficos empleadas serán [Seaborn][enlac
 
 ***
 
-### Presentación y estructura
+## Presentación y estructura
 
 Todo el código se estructura en distintos scripts:
 + functions.py, donde almacenamos todas las partes del código recurrente en forma de funciones, de forma que eliminamos líneas redundantes y facilitamos la lectura del mismo.
 + data_treatment.py, donde realizamos el estudio del dataset y modificaciones correspondientes.
-+ plots_&_models.ypnb, donde dejaremos presentado en forma de cuaderno de Jupyter tanto los distintos informes gráficos como los resultados obtenidos.
++ plots_&_models.ipynb, donde dejaremos presentado en forma de cuaderno de Jupyter tanto los distintos informes gráficos como los resultados obtenidos.
