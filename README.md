@@ -59,4 +59,4 @@ Las librerías para visualización de gráficos empleadas serán [Seaborn][enlac
 Todo el código se estructura en distintos scripts:
 + functions.py, donde almacenamos todas las partes del código recurrente en forma de funciones, de forma que eliminamos líneas redundantes y facilitamos la lectura del mismo.
 + data_treatment.py, donde realizamos el estudio del dataset y modificaciones correspondientes.
-+ plots_&_models.ipynb, donde dejaremos presentado en forma de cuaderno de Jupyter tanto los distintos informes gráficos como los resultados obtenidos.
++ Proyecto_Housing.ipynb, donde dejaremos presentado en forma de cuaderno de Jupyter tanto los distintos informes gráficos como los resultados obtenidos.
