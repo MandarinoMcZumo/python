@@ -25,6 +25,7 @@ def nans_row_index(df):
     out_index = list(dict.fromkeys(out_index))
     return out_index
 
+
 def nans_per_row(df):
     out_index = []
     for i in df.columns:
@@ -38,3 +39,18 @@ def nans_per_row(df):
     nans_p_row = pd.DataFrame(nans_p_row, index=['NaNs_Ammount']).T
     return nans_p_row.sort_values(by=['NaNs_Ammount'], ascending=False)
 
+
+def representative(df, val):
+    result = {}
+    rep = []
+    for i in df:
+        result.update({i: df[i].value_counts()/len(df)})
+
+    for key in result:
+        for cc, i in enumerate(result[key]):
+            if i<=val:
+                rep.append([key, result[key].keys()[cc], result[key][cc]])
+                
+    rep = pd.DataFrame(rep)
+    rep.columns = ['var', 'value', '%']
+    return rep
