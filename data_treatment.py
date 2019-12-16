@@ -11,20 +11,20 @@ dt_train = pd.read_csv('train.csv')
 dt_test = pd.read_csv('test.csv')
 
 # Hay 81 columnas en el dataset, vamos a evaluar tanto % de nans, outliers, correlaciones...
-dt_train.dtypes
+# dt_train.dtypes
 
 # NaNs
-plt.figure(figsize=(15, 8))
-sns.barplot(nans(dt_train)['index'], nans(dt_train)['%_nans'])
-plt.xticks(rotation=45)
-plt.title('Nans train')
-plt.show()
+# plt.figure(figsize=(15, 8))
+# sns.barplot(nans(dt_train)['index'], nans(dt_train)['%_nans'])
+# plt.xticks(rotation=45)
+# plt.title('Nans train')
+# plt.show()
 
-plt.figure(figsize=(15, 8))
-sns.barplot(nans(dt_test)['index'], nans(dt_test)['%_nans'])
-plt.xticks(rotation=45)
-plt.title('Nans test')
-plt.show()
+# plt.figure(figsize=(15, 8))
+# sns.barplot(nans(dt_test)['index'], nans(dt_test)['%_nans'])
+# plt.xticks(rotation=45)
+# plt.title('Nans test')
+# plt.show()
 
 # Variables como 'Alley', 'PoolQC', 'Fence' o 'MiscFeature' tienen un % de nans muy alto
 # Llenamos los NaN's de la variable Alley, Fence y Misc con una nueva categoría ('NO')
@@ -35,18 +35,18 @@ for i in no:
     dt_test[i].fillna('NO', inplace=True)
 
 dt_train = drop_nans(dt_train, 0.5)
-plt.figure(figsize=(15, 8))
-sns.barplot(nans(dt_train)['index'], nans(dt_train)['%_nans'])
-plt.xticks(rotation=45)
-plt.title('Nans')
-plt.show()
+# plt.figure(figsize=(15, 8))
+# sns.barplot(nans(dt_train)['index'], nans(dt_train)['%_nans'])
+# plt.xticks(rotation=45)
+# plt.title('Nans')
+# plt.show()
 
 dt_test = drop_nans(dt_test, 0.51)
-plt.figure(figsize=(15, 8))
-sns.barplot(nans(dt_test)['index'], nans(dt_test)['%_nans'])
-plt.xticks(rotation=45)
-plt.title('Nans')
-plt.show()
+# plt.figure(figsize=(15, 8))
+# sns.barplot(nans(dt_test)['index'], nans(dt_test)['%_nans'])
+# plt.xticks(rotation=45)
+# plt.title('Nans')
+# plt.show()
 
 # ---------------------------------------------------------------------------------
 # Gráfico de distribución de LotFrontage vinculado al precio:
@@ -94,22 +94,22 @@ dt_train.drop(['Fireplaces', 'FireplaceQu'], axis=1, inplace=True)
 dt_test.drop(['Fireplaces', 'FireplaceQu'], axis=1, inplace=True)
 
 # Ninguna variable tiene más de un 10% de nans, veamos cuántas observaciones totales eliminaríamos en caso de quitarlas:
-len(nans_row_index(dt_train)) / len(dt_train)
-len(nans_row_index(dt_test)) / len(dt_test)
+# len(nans_row_index(dt_train)) / len(dt_train)
+# len(nans_row_index(dt_test)) / len(dt_test)
 
 # Eliminaríamos cerca de un 10% de la información, vamos a intentar dar tratamiento para mantener información
 # A través de la función nans_per_row vemos cuántos nans hay por fila
 
-nans_per_row(dt_test)['NaNs_Ammount'].value_counts()
-nans_per_row(dt_train)['NaNs_Ammount'].value_counts()
+# nans_per_row(dt_test)['NaNs_Ammount'].value_counts()
+# nans_per_row(dt_train)['NaNs_Ammount'].value_counts()
 
 # Hay al menos 5 variables muy correlacionadas la mayor parte de filas con nans tiene 5 variables
 
-msno.matrix(dt_train)
-msno.matrix(dt_test)
+# msno.matrix(dt_train)
+# msno.matrix(dt_test)
 
-msno.heatmap(dt_train)
-msno.heatmap(dt_test)
+# msno.heatmap(dt_train)
+# msno.heatmap(dt_test)
 
 # Todas la variables de atributos del garage o del sótano están correlacionadas.
 # Los nans corresponden a las casas sin garage o sin sótano, vamos a crear una categoría para ellas
@@ -157,9 +157,39 @@ dt_cat = dt_train[categoricas]
 #     alt.hconcat(g1, g2, g3, g4, g5, g6).display()
 
 # Vemos las variables sin representación y las agrupamos:
-rep = representative(dt_cat, 0.02)
+rep, unq = representative(dt_cat, 0.02)
 rep.head()
 
+# Mediante unaa agrupación del dataset ordenado sacamos el índice en forma de lista y lo subdividimos en las zonas:
+nbhoods = list(dt_train[['Neighborhood', 'SalePrice']].groupby(['Neighborhood']).mean().sort_values(by='SalePrice', ascending=False).index)
+nbhoods_A = nbhoods[:3]
+nbhoods_B = nbhoods[3:13]
+nbhoods_C = nbhoods[13:22]
+nbhoods_D = nbhoods[-3:]
+
+# Definimos el bucle para crear la nueva variable:
+dt_train['Areas'] = dt_train['Neighborhood'].apply(lambda x: 'A' if x in nbhoods_A else 'B' if x in nbhoods_B else 'C' if x in nbhoods_C else 'D')
+dt_test['Areas'] = dt_test['Neighborhood'].apply(lambda x: 'A' if x in nbhoods_A else 'B' if x in nbhoods_B else 'C' if x in nbhoods_C else 'D')
+
+dt_train.drop('Neighborhood', axis=1, inplace=True)
+
+# Actualizamos la lista de categóricas y numéricas ya que hay nuevas variables a tener en cuenta:
+categoricas = []
+numericas = []
+for i in dt_train.columns:
+    if dt_train.dtypes.loc[i] == 'object':
+        categoricas.append(i)
+    else:
+        numericas.append(i)
+
+dt_cat = dt_train[categoricas]
+        
+rep, unq = representative(dt_cat, 0.05)
+
+# Aplicamos la agrupación de categorías con baja representación
+# Aplicamos el bucle de la agrupación de categorías con baja representación:
+
 for i in range(len(rep)):
-    feature = rep['var'][i]
-    dt_train[feature] = dt_train[feature].apply(lambda x: 'grouped_' + feature if x == rep['value'][i] else x)
+    feature = rep['var'].iloc[i]
+    dt_train[feature] = dt_train[feature].apply(lambda x: 'grouped_' + feature if x == rep['value'].iloc[i] else x)
+    dt_test[feature] = dt_test[feature].apply(lambda x: 'grouped_' + feature if x == rep['value'].iloc[i] else x) 

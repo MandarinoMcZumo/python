@@ -52,5 +52,8 @@ def representative(df, val):
                 rep.append([key, result[key].keys()[cc], result[key][cc]])
                 
     rep = pd.DataFrame(rep)
-    rep.columns = ['var', 'value', '%']
-    return rep
+    features = ['var', 'value', '%']
+    rep.columns = features
+    resumen = rep[['var', '%']].groupby('var').count()
+    rep['count'] = rep['var'].apply(lambda x: resumen.loc[x, '%'])
+    return rep[features][rep['count'] != 1], rep[features][rep['count'] == 1]
