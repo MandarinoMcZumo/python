@@ -39,6 +39,7 @@ El dataset propuesto lo podemos encontrar en [este enlace][enlace_datos]. Ademá
 Emplearemos los siguientes algoritmos para realizar un modelo:
 + [Random Forest][random_forest]
 + [Linear Regression][linear_regression]
++ [XGBoost](https://xgboost.readthedocs.io/en/latest/)
 + [Neural Network][Neural]
 + [SVR][SVR]
 
