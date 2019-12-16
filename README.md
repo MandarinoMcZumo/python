@@ -16,6 +16,7 @@ El proyecto consiste en el tratamiento de datos, exploración gráfica y la elab
 + [Algoritmos](#algoritmos)
 + [Visualización](#visualización)
 + [Presentación y estructura](#presentación-y-estructura)
++ [Proyecto final (Google Colab)](https://colab.research.google.com/github/MandarinoMcZumo/python/blob/master/Proyecto_Housing.ipynb)
 
 ***
 
