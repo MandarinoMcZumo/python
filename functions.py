@@ -83,7 +83,7 @@ def m_histograma(df, col, sz=(30,10), clr='teal'):
                 i -= 1
 
                 
-def m_countplot(df, col, sz=(30,10), clr='teal'):
+def m_countplot(df, col, sz=(30,10), clr='Paired'):
     features = list(df.columns)
     rows = len(features) // col
     residuo = len(features) % col
@@ -92,17 +92,17 @@ def m_countplot(df, col, sz=(30,10), clr='teal'):
     i=0
     for r in range(rows):
         for c in range(col):
-            sns.countplot(df[features[i]], color=clr, ax=ax[r, c])
+            sns.countplot(df[features[i]], palette=clr, ax=ax[r, c])
             i+=1
     
     if residuo != 0:
         if residuo == 1:
-            return sns.countplot(df[features[-1]], color=clr)
+            return sns.countplot(df[features[-1]], palette=clr)
         if residuo > 1:
             fig, ax = plt.subplots(nrows=1, ncols=residuo, figsize=(sz[0], sz[1]//residuo))
             i = -1
             for c in range(residuo):
-                sns.countplot(df[features[i]] , color=clr, ax=ax[c])
+                sns.countplot(df[features[i]] , palette=clr, ax=ax[c])
                 i -= 1
 
     
