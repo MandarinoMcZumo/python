@@ -1,5 +1,6 @@
 import pandas as pd
-
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 def nans(df):
     nans = pd.DataFrame(df.isnull().sum(), columns=['num_nans'])
@@ -57,3 +58,73 @@ def representative(df, val):
     resumen = rep[['var', '%']].groupby('var').count()
     rep['count'] = rep['var'].apply(lambda x: resumen.loc[x, '%'])
     return rep[features][rep['count'] != 1], rep[features][rep['count'] == 1]
+
+
+def m_histograma(df, col, sz=(30,10), clr='teal'):
+    features = list(df.columns)
+    rows = len(features) // col
+    residuo = len(features) % col
+
+    fig, ax = plt.subplots(rows, col, figsize=sz)
+    i=0
+    for r in range(rows):
+        for c in range(col):
+            sns.distplot(df[features[i]], color=clr, ax=ax[r, c])
+            i+=1
+    
+    if residuo != 0:
+        if residuo == 1:
+            return sns.distplot(df[features[-1]], color=clr)
+        if residuo > 1:
+            fig, ax = plt.subplots(nrows=1, ncols=residuo, figsize=(sz[0], sz[1]//residuo))
+            i = -1
+            for c in range(residuo):
+                sns.distplot(df[features[i]] , color=clr, ax=ax[c])
+                i -= 1
+
+                
+def m_countplot(df, col, sz=(30,10), clr='teal'):
+    features = list(df.columns)
+    rows = len(features) // col
+    residuo = len(features) % col
+
+    fig, ax = plt.subplots(rows, col, figsize=sz)
+    i=0
+    for r in range(rows):
+        for c in range(col):
+            sns.countplot(df[features[i]], color=clr, ax=ax[r, c])
+            i+=1
+    
+    if residuo != 0:
+        if residuo == 1:
+            return sns.countplot(df[features[-1]], color=clr)
+        if residuo > 1:
+            fig, ax = plt.subplots(nrows=1, ncols=residuo, figsize=(sz[0], sz[1]//residuo))
+            i = -1
+            for c in range(residuo):
+                sns.countplot(df[features[i]] , color=clr, ax=ax[c])
+                i -= 1
+
+    
+def m_scatterplot(df, col, var, sz=(30,10), clr='teal'):
+    features = list(df.columns)
+    features.remove(var)
+    rows = len(features) // col
+    residuo = len(features) % col
+
+    fig, ax = plt.subplots(rows, col, figsize=sz)
+    i=0
+    for r in range(rows):
+        for c in range(col):
+            sns.scatterplot(x=df[features[i]], y=df[var], color=clr, ax=ax[r, c])
+            i+=1
+    
+    if residuo != 0:
+        if residuo == 1:
+            return sns.scatterplot(x=df[features[-1]], y=df[var], color=clr)
+        if residuo > 1:
+            fig, ax = plt.subplots(nrows=1, ncols=residuo, figsize=(sz[0], sz[1]//residuo))
+            i = -1
+            for c in range(residuo):
+                sns.scatterplot(x=df[features[i]], y=df[var], color=clr, ax=ax[c])
+                i -= 1
