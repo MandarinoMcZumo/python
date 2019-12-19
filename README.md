@@ -43,7 +43,7 @@ Emplearemos los siguientes algoritmos para realizar un modelo:
 + [Neural Network][Neural]
 + [SVR][SVR]
 
-Además de probar distintos métodos tras realizar PCA en el dataset y evaluar si compensa realizar la reducción de variables ara obtener un mejor resultado.
+Además de probar distintos métodos tras realizar PCA en el dataset y evaluar si compensa realizar la reducción de variables para obtener un mejor resultado.
 
 ***
 
